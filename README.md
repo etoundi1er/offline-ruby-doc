@@ -22,7 +22,9 @@ Pow lets you start a local server that serves apps under a local url like `http:
 
 <figure class="highlight">
 
-    curl get.pow.cx | sh
+```
+curl get.pow.cx | sh
+```
 
 </figure>
 
@@ -30,7 +32,9 @@ For more information, visit [pow.cx](http://pow.cx). I recommend using Pow in co
 
 <figure class="highlight">
 
-    gem install powder
+```
+gem install powder
+```
 
 </figure>
 
@@ -40,12 +44,14 @@ Pre-rendered Ruby core documentation is [available from ruby-doc.org](http://www
 
 <figure class="highlight">
 
-    mkdir ruby-doc-dev
-    cd ruby-doc-dev
-    curl -O http://www.ruby-doc.org/downloads/ruby_2_1_1_core_rdocs.tgz
-    tar xvf ruby_2_1_1_core_rdocs.tgz
-    mv ruby_2_1_1_core public
-    powder link ruby-doc
+```
+mkdir ruby-doc-dev
+cd ruby-doc-dev
+curl -O http://www.ruby-doc.org/downloads/ruby_2_1_1_core_rdocs.tgz
+tar xvf ruby_2_1_1_core_rdocs.tgz
+mv ruby_2_1_1_core public
+powder link ruby-doc
+```
 
 </figure>
 
@@ -55,7 +61,9 @@ Your Ruby documentation is now available at [http://ruby-doc.dev](http://ruby-do
 
 <figure class="highlight">
 
-    gem install yard
+```
+gem install yard
+```
 
 </figure>
 
@@ -63,24 +71,26 @@ Save the following file as `~/Library/LaunchAgents/YardDocs.plist` and adjust th
 
 <figure class="highlight">
 
-    <?xml version="1.0" encoding="UTF-8"?>
-    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-    <plist version="1.0">
-    <dict>
-      <key>KeepAlive</key>
-      <true/>
-      <key>Label</key>
-      <string>YardDocs</string>
-      <key>ProgramArguments</key>
-      <array>
-        <string>/usr/local/opt/rbenv/shims/yard</string>
-          <string>server</string>
-          <string>--gems</string>
-      </array>
-      <key>RunAtLoad</key>
-      <true/>
-    </dict>
-    </plist>
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>KeepAlive</key>
+  <true/>
+  <key>Label</key>
+  <string>YardDocs</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/local/opt/rbenv/shims/yard</string>
+      <string>server</string>
+      <string>--gems</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+</dict>
+</plist>
+```
 
 </figure>
 
@@ -88,8 +98,10 @@ Next, start the server and set up Pow to do the port forwarding.
 
 <figure class="highlight">
 
-    launchctl load -w ~/Library/LaunchAgents/YardDocs.plist
-    echo '8808' > ~/.pow/gem-doc
+```
+launchctl load -w ~/Library/LaunchAgents/YardDocs.plist
+echo '8808' > ~/.pow/gem-doc
+```
 
 </figure>
 
@@ -97,7 +109,9 @@ Your Ruby documentation is now available at [http://gem-doc.dev](http://gem-doc.
 
 <figure class="highlight">
 
-    gem rdoc --all
+```
+gem rdoc --all
+```
 
 </figure>
 
@@ -107,7 +121,9 @@ Rails documentation can be generated directly from a Rails app, so the first ste
 
 <figure class="highlight">
 
-    mkdir rails-api-dev
+```
+mkdir rails-api-dev
+```
 
 </figure>
 
@@ -115,15 +131,17 @@ First, add the `rails` gem in the desired version to your `Gemfile`. You will al
 
 <figure class="highlight">
 
-    # Gemfile
+```
+# Gemfile
 
-    source 'https://rubygems.org'
+source 'https://rubygems.org'
 
-    gem 'rails', '4.1.1'
+gem 'rails', '4.1.1'
 
-    gem 'sdoc'
-    gem 'redcarpet'
-    gem 'nokogiri'
+gem 'sdoc'
+gem 'redcarpet'
+gem 'nokogiri'
+```
 
 </figure>
 
@@ -131,7 +149,9 @@ Then, install all the Gems with
 
 <figure class="highlight">
 
-    bundle install
+```
+bundle install
+```
 
 </figure>
 
@@ -139,16 +159,18 @@ Rails expects an application to be present before it lets you run the Rake task 
 
 <figure class="highlight">
 
-    # Rakefile
+```
+# Rakefile
 
-    require 'rails/all'
-    Bundler.require
+require 'rails/all'
+Bundler.require
 
-    module FakeApp
-      class Application < Rails::Application; end
-    end
+module FakeApp
+  class Application < Rails::Application; end
+end
 
-    Rails.application.load_tasks
+Rails.application.load_tasks
+```
 
 </figure>
 
@@ -156,7 +178,9 @@ Now, you have Rails’ Rake tasks at your disposal and are able to generate the 
 
 <figure class="highlight">
 
-    rake doc:rails
+```
+rake doc:rails
+```
 
 </figure>
 
@@ -164,12 +188,14 @@ To serve the documentation with Pow, you need to add a Rackup file at `config.ru
 
 <figure class="highlight">
 
-    # config.ru
+```
+# config.ru
 
-    require 'rack'
+require 'rack'
 
-    use Rack::Static, urls: ['/'], root: 'doc/api', index: 'index.html'
-    run ->{}
+use Rack::Static, urls: ['/'], root: 'doc/api', index: 'index.html'
+run ->{}
+```
 
 </figure>
 
@@ -177,7 +203,9 @@ and finally you can serve it via Pow:
 
 <figure class="highlight">
 
-    powder link rails-api
+```
+powder link rails-api
+```
 
 </figure>
 
@@ -187,9 +215,11 @@ To read the Rails Guides locally, you can simply clone the folder that you have 
 
 <figure class="highlight">
 
-    cd ..
-    cp -R rails-api-dev rails-guides-dev
-    cd rails-guides-dev
+```
+cd ..
+cp -R rails-api-dev rails-guides-dev
+cd rails-guides-dev
+```
 
 </figure>
 
@@ -197,7 +227,9 @@ This time, you need to run a different Rake task to generate the guides:
 
 <figure class="highlight">
 
-    rake doc:guides
+```
+rake doc:guides
+```
 
 </figure>
 
@@ -205,12 +237,14 @@ Since the guides end up in a different directory than the API documentation, you
 
 <figure class="highlight">
 
-    # config.ru
+```
+# config.ru
 
-    require 'rack'
+require 'rack'
 
-    use Rack::Static, urls: ['/'], root: 'doc/guides', index: 'index.html'
-    run ->{}
+use Rack::Static, urls: ['/'], root: 'doc/guides', index: 'index.html'
+run ->{}
+```
 
 </figure>
 
@@ -218,8 +252,10 @@ Finally, you can set up Pow to serve the Rails Guides:
 
 <figure class="highlight">
 
-    rm .powder
-    powder link rails-guides
+```
+rm .powder
+powder link rails-guides
+```
 
 </figure>
 
