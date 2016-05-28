@@ -1,9 +1,3 @@
-# offline-ruby-doc
-Tutorial or offline ruby and rails documentation
-
-Written by Patrick Oscity
-http://patrickoscity.de/blog/offline-ruby-rails-documentation
-
 <section id="content" class="clearfix">
 
 <header>
